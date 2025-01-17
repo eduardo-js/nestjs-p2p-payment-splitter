@@ -1,0 +1,70 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      MAILER_HOST: 'mailhog'
+      MAILER_PORT : 1025
+      MAILER_USER: 'user'
+      MAILER_PASS: 'pass'
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_S3_BUCKET_NAME: bucket-test
+      AWS_S3_ENDPOINT: http://localstack:4566
+      AWS_REGION: 'us-east-1'
+    ports:
+      - "3000:3000"
+    depends_on:
+      - localstack
+      - mailhog
+    networks:
+      - app-network
+
+  localstack:
+    image: localstack/localstack
+    environment:
+      GATEWAY_LISTEN: 4566
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      S3_BUCKET_NAME: 'bucket-test'
+      SERVICES: s3
+    ports:
+      - "4566:4566"
+      - "4572:4572"
+    volumes:
+      - localstack-data:/var/lib/localstack
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+    networks:
+      - app-network
+
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025" 
+      - "8025:8025" 
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "1025"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+    networks:
+      - app-network
+
+volumes:
+  localstack-data:
+
+networks:
+  app-network:
+    driver: bridge
