@@ -8,7 +8,7 @@ The **Peer-to-Peer Payment Splitter** is a NestJS-based application designed to 
 
 NestJS is a TypeScript-based framework that helps developers build efficient, scalable applications. It leverages **Dependency Injection (DI)**, promoting clean code architecture by managing dependencies between components. With a modular system, NestJS offers numerous integrations for common tasks like database access and authentication, simplifying development.
 
-This project follows an **event-driven architecture**, where actions are triggered by events, enabling better scalability and efficient handling of asynchronous workflows. However, it’s important to note that event-driven systems can introduce complexity in managing data consistency. To address this, patterns such as **Sagas**, **Circuit Breakers**, and **Outbox** can be implemented for improved reliability, fault tolerance, and to ensure eventual consistency across services.
+This project follows an **event-driven architecture**, where actions are triggered by events, enabling better scalability and efficient handling of asynchronous workflows.
 
 ### Why Gun
 
