@@ -3,7 +3,7 @@ import { CreateExpenseGroupDto, ExpenseGroupParticipantDto } from '../dtos';
 import { ExpenseGroupCreatedEvent } from '../events';
 import { IGunService } from '@/modules/gun/interfaces';
 import { IExpenseGroupService } from '../interfaces';
-import { IEventEmitterService } from '@/modules/event-emitter/interfaces';
+import { IEventEmitterService } from '@/modules/event/interfaces';
 
 @Injectable()
 export default class ExpenseGroupService implements IExpenseGroupService {
@@ -20,7 +20,7 @@ export default class ExpenseGroupService implements IExpenseGroupService {
 
     this.gunService.setData(`${this.scope}/${expenseGroup.id}`, rest);
 
-    this.eventEmitter.emit(
+    this.eventEmitter.save(
       `${this.scope}.created`,
       new ExpenseGroupCreatedEvent(expenseGroup.id, participants),
     );

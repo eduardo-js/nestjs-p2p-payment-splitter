@@ -1,7 +1,7 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import BalanceService from './balance.service';
 import { ExpenseGroupService } from '@/modules/expense-group/services';
-import { MockEventEmitter } from '@/modules/event-emitter/__mock__/event-emitter.mock';
+import { MockEventEmitter } from '@/modules/event/__mock__/event-emitter.mock';
 import { MockGunService } from '@/modules/gun/__mock__/gun.service.mock';
 import { SplitType } from '@/modules/expense/enums';
 

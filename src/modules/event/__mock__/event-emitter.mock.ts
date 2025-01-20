@@ -1,7 +1,7 @@
 import { IEventEmitterService } from "../interfaces";
 
 export class MockEventEmitter implements IEventEmitterService {
-  emit(event: string, payload: any): void {
+  save(event: string, payload: any): void {
     console.log(`Event emitted: ${event}`, payload);
   }
 

@@ -11,7 +11,10 @@ import { FileService, S3Service } from './modules/file/service';
 import { BalanceController } from './modules/balance/controllers/';
 import { BalanceService } from './modules/balance/services';
 import { GunService } from './modules/gun/services';
-import EventEmitterService from './modules/event-emitter/services/event-emitter.service';
+import { EventEmitterService } from './modules/event/services/';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EventRepository } from './modules/event/repository/event.repository';
+import { EventEntity } from './modules/event/entity/';
 
 @Module({
   imports: [
@@ -29,6 +32,17 @@ import EventEmitterService from './modules/event-emitter/services/event-emitter.
         ignoreTLS: true,
       },
     }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.PG_HOST,
+      port: Number(process.env.PG_PORT ?? 5432),
+      username: process.env.PG_USER,
+      password: process.env.PG_PASSWORD,
+      database: process.env.PG_DATABASE,
+      entities: [EventEntity],
+      synchronize: true,
+    }),
+    TypeOrmModule.forFeature([EventEntity]),
   ],
   controllers: [ExpenseGroupController, ExpenseController, BalanceController],
   providers: [
@@ -40,6 +54,7 @@ import EventEmitterService from './modules/event-emitter/services/event-emitter.
     { provide: 'FileService', useClass: FileService },
     { provide: 'S3Service', useClass: S3Service },
     { provide: 'EventEmitterService', useClass: EventEmitterService },
+    EventRepository,
   ],
 })
-export class AppModule {}
+export class AppModule { }

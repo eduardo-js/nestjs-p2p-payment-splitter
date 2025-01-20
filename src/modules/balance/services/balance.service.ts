@@ -8,7 +8,7 @@ import { BalanceSettledEvent } from '../events';
 import { IGunService } from '@/modules/gun/interfaces';
 import IExpenseGroupService from '@/modules/expense-group/interfaces/expense-group.interface';
 import { IBalanceService } from '../interfaces';
-import { IEventEmitterService } from '@/modules/event-emitter/interfaces';
+import { IEventEmitterService } from '@/modules/event/interfaces';
 
 @Injectable()
 export default class BalanceService implements IBalanceService {
@@ -308,7 +308,7 @@ export default class BalanceService implements IBalanceService {
     ];
     await this.processMultipleTransactions({ expenseGroupId, transactions });
 
-    this.eventEmitter.emit(
+    this.eventEmitter.save(
       `${this.scope}.settled`,
       new BalanceSettledEvent(expenseGroupId, settleDebtDto),
     );

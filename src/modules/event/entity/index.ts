@@ -1,0 +1,1 @@
+export { default as EventEntity } from './event.entity'

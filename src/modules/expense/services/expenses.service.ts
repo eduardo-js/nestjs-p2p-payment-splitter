@@ -11,7 +11,7 @@ import { IGunService } from '@/modules/gun/interfaces';
 import IExpenseGroupService from '@/modules/expense-group/interfaces/expense-group.interface';
 import { IFileService } from '@/modules/file/interfaces';
 import { IExpenseService } from '../interfaces';
-import { IEventEmitterService } from '@/modules/event-emitter/interfaces';
+import { IEventEmitterService } from '@/modules/event/interfaces';
 
 @Injectable()
 export default class ExpenseService implements IExpenseService {
@@ -66,7 +66,7 @@ export default class ExpenseService implements IExpenseService {
       }),
     );
 
-    this.eventEmitter.emit(
+    this.eventEmitter.save(
       `${this.scope}.created`,
       new ExpenseCreatedEvent(
         expense.id,
@@ -88,7 +88,7 @@ export default class ExpenseService implements IExpenseService {
   async processBatch(file: Express.Multer.File) {
     file.filename = nanoid();
     const url = await this.fileService.uploadFile(file, this.scope, 'AWS');
-    this.eventEmitter.emit(`${this.scope}.uploaded`, url.key);
+    this.eventEmitter.save(`${this.scope}.uploaded`, url.key);
 
     return { message: 'File being processed.' };
   }
