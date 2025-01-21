@@ -88,11 +88,11 @@ Here’s a brief overview of the key API endpoints:
 
 1. **Create an Expense Group**:
    - `POST /expense-groups`
-   - Body: `{ name: "Group Name", participants: ["Alice", "Bob"] }`
+   - Body: `{ name: "Group Name", participants: [{name: "Alice", email: "alice@email.com"}, {"Bob"}] }`
 
 2. **Create an Expense**:
    - `POST /expenses`
-   - Body: `{ amount: 50.00, paidBy: "Alice", splitType: "EQUALLY", expenseGroupId: "group-id" }`
+   - Body: `{ amount: 50.00, paidBy: "Alice", splitType: "EQUALLY", expenseGroupId: "group-id", "createdAt": "2025-01-14T12:00:00.000Z", "name": "Dinner with friends",  "paidBy": "user1", "splitBetween": ["Alice", "Bob" ], }`
 
 3. **Check Balance**:
    - `GET /balances`

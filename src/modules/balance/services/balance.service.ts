@@ -79,8 +79,8 @@ export default class BalanceService implements IBalanceService {
     });
   }
   calculateProportionalSplit(totalAmount: number, participants: number): number[] {
-    let lower = 0.01; 
-    let upper = totalAmount / participants; 
+    let lower = 0.01;
+    let upper = totalAmount / participants;
 
     let baseSplit = 0;
     while (this.roundNumber(lower) < this.roundNumber(upper)) {
@@ -90,9 +90,9 @@ export default class BalanceService implements IBalanceService {
 
       if (totalDistributed <= totalAmount) {
         baseSplit = mid;
-        lower = mid + 0.01; 
+        lower = mid + 0.01;
       } else {
-        upper = mid - 0.01; 
+        upper = mid - 0.01;
       }
     }
 
@@ -260,11 +260,11 @@ export default class BalanceService implements IBalanceService {
       updates.push(
         {
           key: payerKey,
-          newBalance: (currentPayer.balance || 0) + amountOwed,
+          newBalance: this.roundNumber((currentPayer.balance || 0) + amountOwed),
         },
         {
           key: participantKey,
-          newBalance: (currentParticipant.balance || 0) - amountOwed,
+          newBalance: this.roundNumber((currentParticipant.balance || 0) - amountOwed),
         },
       );
     }
