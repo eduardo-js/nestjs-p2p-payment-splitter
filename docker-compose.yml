@@ -22,6 +22,8 @@ services:
       - mailhog
     networks:
       - app-network
+    entrypoint: ["./wait-for-it.sh", "localstack:4566", "--", "wait-for-it.sh", "mailhog:1025", "--", "npm", "start"]
+
 
   localstack:
     image: localstack/localstack

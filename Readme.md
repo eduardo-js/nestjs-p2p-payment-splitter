@@ -64,7 +64,7 @@ The project includes a `docker-compose.yml` file to configure the services for L
 Run the following command to start the services:
 
 ```sh
-docker-compose up --build
+docker-compose up --build 
 ```
 
 This will:
